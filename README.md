@@ -22,7 +22,7 @@ A note for the pause menu: There is no enum currently in OoT that corresponds to
 - `KALEIDO`
 - `KALEIDO_SCOPE`
   
-Note: This tool does not currently support moverlays made up of multiple object files, but hopefully it will soon :)
+Note: This tool does not currently support overlays made up of multiple object files, but hopefully it will soon :)
 
 ***
 
