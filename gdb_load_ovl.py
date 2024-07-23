@@ -14,6 +14,15 @@ TYPE_U32 = gdb.lookup_type('u32')
 # address to object-path map, used to unload entire .o files by an address
 obj_address_map = {}
 
+supported_versions = [
+    "gc-eu-mq-dbg",
+    "gc-eu-mq",
+    "gc-eu",
+    "gc-us",
+]
+
+current_version = "gc-eu-mq-dbg"
+
 def get_section_address(ovl_name, section_name):
   section_start_name = "_" + ovl_name + "Segment" + section_name + "Start"
   # 'section_start_name' is a 'text variable' according to gdb, this can not be resolved via python directly
@@ -48,7 +57,7 @@ def AddOverlaySymbols(overlay_table, index):
 
     # get full object-file path that contains the first symbol
     target_filename = gdb.lookup_symbol(target_func_name)[0].symtab.filename
-    obj_name = "build/" + target_filename[:-1] + "o"
+    obj_name = f"build/{current_version}/{target_filename[:-2]}.o"
 
     pattern = r'[^/]*$'
     matches = re.findall(pattern, obj_name)
@@ -101,10 +110,24 @@ class LoadOvlCmd(gdb.Command):
             try:
                 index = gdb.lookup_symbol(arg)[0].value().cast(TYPE_U32)
             except:
-                print("ERROR: Provided enum value could not be found in the elf")
+                print("ERROR: Provided enum value could not be found in the elf.")
                 return
 
 
             AddOverlaySymbols(table, index)
 
+class ChangeVerCmd(gdb.Command):
+    def __init__(self):
+        super().__init__("ver", gdb.COMMAND_DATA, gdb.COMPLETE_EXPRESSION)
+
+    def invoke(self, arg, from_tty):
+        arg = arg.lower()
+
+        if arg in supported_versions:
+            current_version = arg
+            print(f"Version changed to {arg}")
+        else:
+            print(f"ERROR: \"{arg}\" is not a supported game version. Please try again.")
+
 LoadOvlCmd()
+ChangeVerCmd()

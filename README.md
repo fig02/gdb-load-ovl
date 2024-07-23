@@ -26,6 +26,20 @@ Note: This tool does not currently support overlays made up of multiple object f
 
 ***
 
+To change versions of the game, enter the following command:
+```
+ver version-string
+```
+Where `version-string` corresponds to one of the following:
+- gc-eu-mq-dbg
+- gc-eu-mq
+- gc-eu
+- gc-us
+
+The default version is gc-eu-mq-dbg.
+
+***
+
 To have gdb auto-load the script, you need the following:
 
 In the oot directory, create a `.gdbinit` file with the following contents:
