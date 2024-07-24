@@ -76,45 +76,48 @@ def AddOverlaySymbols(overlay_table, index):
     
     print("Complete.")
 
+def process_ovl(name):
+    name = name.upper()
+
+    if name == "PAUSE" or name == "KALEIDO" or name == "KALEIDO_SCOPE":
+        # Pause menu does not have an enum, special case it. Index is 0 in `gKaleidoMgrOverlayTable`
+        table = gdb.lookup_global_symbol("gKaleidoMgrOverlayTable").value()
+        AddOverlaySymbols(table, 0)
+    elif name == "ACTOR_PLAYER":
+        # Player's index does not correspond to his actor ID, Special case it. Index is 1 in `gKaleidoMgrOverlayTable`
+        table = gdb.lookup_global_symbol("gKaleidoMgrOverlayTable").value()
+        AddOverlaySymbols(table, 1)
+    else:
+        pattern = r'^([^_]+)'
+        matches = re.findall(pattern, name)
+        ovl_type = matches[0]
+
+        if ovl_type == "GAMESTATE":
+            table = gdb.lookup_global_symbol("gGameStateOverlayTable").value()
+        elif ovl_type == "ACTOR":
+            table = gdb.lookup_global_symbol("gActorOverlayTable").value()
+        elif ovl_type == "EFFECT":
+            table = gdb.lookup_global_symbol("gEffectSsOverlayTable").value()
+        else:
+            print("ERROR: Type of enum provided is not supported")
+            return
+        
+        # try to get the index from the elf via gdb
+        try:
+            index = gdb.lookup_symbol(name)[0].value().cast(TYPE_U32)
+        except:
+            print("ERROR: Provided enum value could not be found in the elf.")
+            return
+
+
+        AddOverlaySymbols(table, index)
+
 class LoadOvlCmd(gdb.Command):
     def __init__(self):
         super().__init__("ovl", gdb.COMMAND_DATA, gdb.COMPLETE_EXPRESSION)
 
     def invoke(self, arg, from_tty):
-        arg = arg.upper()
-
-        if arg == "PAUSE" or arg == "KALEIDO" or arg == "KALEIDO_SCOPE":
-            # Pause menu does not have an enum, special case it. Index is 0 in `gKaleidoMgrOverlayTable`
-            table = gdb.lookup_global_symbol("gKaleidoMgrOverlayTable").value()
-            AddOverlaySymbols(table, 0)
-        elif arg == "ACTOR_PLAYER":
-            # Player's index does not correspond to his actor ID, Special case it. Index is 1 in `gKaleidoMgrOverlayTable`
-            table = gdb.lookup_global_symbol("gKaleidoMgrOverlayTable").value()
-            AddOverlaySymbols(table, 1)
-        else:
-            pattern = r'^([^_]+)'
-            matches = re.findall(pattern, arg)
-            ovl_type = matches[0]
-
-            if ovl_type == "GAMESTATE":
-                table = gdb.lookup_global_symbol("gGameStateOverlayTable").value()
-            elif ovl_type == "ACTOR":
-                table = gdb.lookup_global_symbol("gActorOverlayTable").value()
-            elif ovl_type == "EFFECT":
-                table = gdb.lookup_global_symbol("gEffectSsOverlayTable").value()
-            else:
-                print("ERROR: Type of enum provided is not supported")
-                return
-            
-            # try to get the index from the elf via gdb
-            try:
-                index = gdb.lookup_symbol(arg)[0].value().cast(TYPE_U32)
-            except:
-                print("ERROR: Provided enum value could not be found in the elf.")
-                return
-
-
-            AddOverlaySymbols(table, index)
+        process_ovl(arg)
 
 class ChangeVerCmd(gdb.Command):
     def __init__(self):
@@ -131,3 +134,4 @@ class ChangeVerCmd(gdb.Command):
 
 LoadOvlCmd()
 ChangeVerCmd()
+process_ovl("ACTOR_PLAYER")
