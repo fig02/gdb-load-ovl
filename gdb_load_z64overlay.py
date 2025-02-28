@@ -212,7 +212,7 @@ def load_z64overlay_object_from_table(overlay_table, index):
 
 class LoadZ64OvlCmd(gdb.Command):
     def __init__(self):
-        super().__init__("z64ovl", gdb.COMMAND_DATA, gdb.COMPLETE_EXPRESSION)
+        super().__init__("ovl", gdb.COMMAND_DATA, gdb.COMPLETE_EXPRESSION)
 
     def invoke(self, arg, from_tty):
         arg = arg.upper()
