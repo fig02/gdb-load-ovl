@@ -5,11 +5,11 @@
 # https://github.com/HailToDodongo/oot/blob/daea8bacb27425a7dd8923dea6e0467ba68d1047/gdb_script.py
 # https://github.com/fig02/gdb-load-ovl ( https://github.com/fig02/gdb-load-ovl/tree/327147060af067c4e2ff4793b4d46249afeab161 )
 
-# Once loaded, this script provides a command `z64ovl`,
+# Once loaded, this script provides a command `ovl`,
 # that allows loading into gdb a z64 overlay *that is already loaded in-game*.
-# For loading the pause menu overlay: `z64ovl PAUSE` or `z64ovl KALEIDO` or `z64ovl KALEIDO_SCOPE`
-# Examples: `z64ovl ACTOR_PLAYER`, `z64ovl ACTOR_EN_DAIKU`, `z64ovl GAMESTATE_MAP_SELECT`, `z64ovl EFFECT_SS_DUST`
-# The z64 overlays can also be loaded automatically as they're loaded by the game with `z64ovl auto on`
+# For loading the pause menu overlay: `ovl PAUSE` or `ovl KALEIDO` or `ovl KALEIDO_SCOPE`
+# Examples: `ovl ACTOR_PLAYER`, `ovl ACTOR_EN_DAIKU`, `ovl GAMESTATE_MAP_SELECT`, `ovl EFFECT_SS_DUST`
+# The z64 overlays can also be loaded automatically as they're loaded by the game with `ovl auto on`
 
 import enum
 from pathlib import Path
