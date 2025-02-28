@@ -8,6 +8,8 @@ ovl ENUM_NAME
 ```
 where `ENUM_NAME` corresponds to some overlay in the source code of the game.  
 
+(note: `ovl` is a base command in gdb. Using this script will override its functionality. If you still want access to it, change the command name)
+
 This tool currently supports:
 - Actors
 - Gamestates
