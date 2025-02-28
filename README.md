@@ -18,7 +18,9 @@ A note for the pause menu: There is no enum currently in OoT that corresponds to
 - `PAUSE`
 - `KALEIDO`
 - `KALEIDO_SCOPE`
-  
+
+The script can also automatically load overlays into gdb as the game uses them. To do so, run `z64ovl auto on`. Disable with `z64ovl auto off`. The default is `off` (see `AUTOLOAD_ENABLED_BY_DEFAULT` in the script to change the default).
+
 Note: This tool does not currently support overlays made up of multiple object files, but hopefully it will soon :)
 
 ***
