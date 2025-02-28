@@ -30,7 +30,7 @@ To have gdb auto-load the script, you need the following:
 In the oot directory, create a `.gdbinit` file with the following contents:
 ```
 define target hookpost-remote
-    source gdb_load_ovl.py
+    source gdb_load_z64overlay.py
 end
 ```
 And in your home directory, create `~/.config/gdb/gdbinit` with the following contents:
