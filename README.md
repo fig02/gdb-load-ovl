@@ -4,7 +4,7 @@ Utility for loading individual overlays while debugging OoT using GDB
 Usage:  
 In a gdb console with the script loaded, enter:  
 ```
-z64ovl ENUM_NAME
+ovl ENUM_NAME
 ```
 where `ENUM_NAME` corresponds to some overlay in the source code of the game.  
 
@@ -19,7 +19,7 @@ A note for the pause menu: There is no enum currently in OoT that corresponds to
 - `KALEIDO`
 - `KALEIDO_SCOPE`
 
-The script can also automatically load overlays into gdb as the game uses them. To do so, run `z64ovl auto on`. Disable with `z64ovl auto off`. The default is `off` (see `AUTOLOAD_ENABLED_BY_DEFAULT` in the script to change the default).
+The script can also automatically load overlays into gdb as the game uses them. To do so, run `ovl auto on`. Disable with `ovl auto off`. The default is `off` (see `AUTOLOAD_ENABLED_BY_DEFAULT` in the script to change the default).
 
 Note: This tool does not currently support overlays made up of multiple object files, but hopefully it will soon :)
 
