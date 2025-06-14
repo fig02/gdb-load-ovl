@@ -1,6 +1,9 @@
 # gdb-load-ovl
 Utility for loading individual overlays while debugging OoT using GDB
 
+THIS REPO IS INACTIVE -- an updated script can be found at https://github.com/Dragorn421/z64-romhack-tutorials/blob/master/debugging/gdb/gdb_load_z64overlay.py
+
+---
 Usage:  
 In a gdb console with the script loaded, enter:  
 ```
